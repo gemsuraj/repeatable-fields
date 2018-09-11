@@ -76,7 +76,10 @@
 					});
 
 					if(typeof self.settings.before_add === 'function') {
-						self.settings.before_add(container);
+						//disallow addition of new row in case of any failure on before_add function
+						var before_add_result = self.settings.before_add(container);
+						if (before_add_result != undefined && before_add_result==false)
+							return false;
 					}
 
 					var new_row = $(row_template).show().appendTo(container);
